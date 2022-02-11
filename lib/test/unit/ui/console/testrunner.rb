@@ -378,7 +378,8 @@ module Test
 
             return unless output?(VERBOSE)
 
-            output(": (%f)" % (Time.now - @test_start), nil, VERBOSE)
+            rss = Integer(`ps -o rss= -p #{Process.pid}`)
+            output(": (rss: #{rss}, heap: #{GC.stat(:used)}, %f)" % (Time.now - @test_start), nil, VERBOSE)
           end
 
           def suite_name(prefix, suite)
